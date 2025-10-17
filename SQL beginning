@@ -1,0 +1,18 @@
+-- Write a query that calculates the percentage of all houses completed in the United States represented by each region. Only return results from the year 2000 and later.
+select 
+year,
+south / (south + west + midwest + northeast) *100 AS SOUTHPERCENTAGE,
+west / (south + west + midwest + northeast) *100 AS WESTPERCENTAGE,
+northeast/ (south + west + midwest + northeast) *100 AS NORTHEASTPERCENTAGE,
+midwest / (south + west + midwest + northeast) *100 AS MIDWESTPERCENTAGE
+from tutorial.us_housing_units
+where year >= 2000
+LIKE AND WILD CARD(%)
+--Write a query that returns all rows for which Ludacris was a member of the group
+SELECT*
+FROM tutorial.billboard_top_100_year_end
+WHERE group_name LIKE '%Ludacris%'
+--Write a query that returns all rows for which the first artist listed in the group has a name that begins with "DJ".
+SELECT*
+FROM tutorial.billboard_top_100_year_end
+WHERE artist LIKE 'DJ%'
