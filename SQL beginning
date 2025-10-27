@@ -16,3 +16,102 @@ WHERE group_name LIKE '%Ludacris%'
 SELECT*
 FROM tutorial.billboard_top_100_year_end
 WHERE artist LIKE 'DJ%'
+IN operator
+--Write a query that shows all of the entries for Elvis and M.C. Hammer.
+SELECT *
+FROM tutorial.billboard_top_100_year_end
+where "group_name" in ('M.C. Hammer', 'Hammer', 'Elvis Presley')
+SQL BETWEEN operator
+--Write a query that shows all top 100 songs from January 1, 1985 through December 31, 1990.select *
+FROM tutorial.billboard_top_100_year_end
+where year_rank <= 100 
+and year between 1985 and 1990
+--Write a query that shows all of the rows for which song_name is null.
+select *
+FROM tutorial.billboard_top_100_year_end
+where song_name is NULL
+SQL AND operator
+--Write a query that surfaces all rows for top-10 hits for which Ludacris is part of the Group.
+select *
+FROM tutorial.billboard_top_100_year_end
+where year_rank <= 10 and group_name ilike '%Ludacris%'
+--Write a query that surfaces the top-ranked records in 1990, 2000, and 2010.
+select *
+FROM tutorial.billboard_top_100_year_end
+where year_rank = 1 and year in (1990,2000,2010)
+--Write a query that lists all songs from the 1960s with "love" in the title.
+select *
+FROM tutorial.billboard_top_100_year_end
+where year between 1960 and 1969 and song_name ilike '%love%'
+SQL OR operator
+--Write a query that returns all rows for top-10 songs that featured either Katy Perry or Bon Jovi.
+select *
+FROM tutorial.billboard_top_100_year_end
+where year_rank <= 10 and  artist ilike '%Katy Perry%'or artist ilike 'Bon Jovi'
+--Write a query that returns all songs with titles that contain the word "California" in either the 1970s or 1990s.
+select *
+FROM tutorial.billboard_top_100_year_end
+where song_name ilike '%california%'
+ AND (year BETWEEN 1970 AND 1979 OR year BETWEEN 1990 AND 1999)
+--Write a query that returns all rows for songs that were on the charts in 2013 and do not contain the letter "a".
+select *
+FROM tutorial.billboard_top_100_year_end
+where year = 2013
+and song_name  not ilike '%a%'
+--Write a query that returns all rows from 2012, ordered by song title from Z to A.
+select *
+FROM tutorial.billboard_top_100_year_end
+where year = 2012
+ORDER BY song_name DESC
+--Write a query that returns all rows from 2010 ordered by rank, with artists ordered alphabetically for each song.
+select *
+FROM tutorial.billboard_top_100_year_end
+where year = 2010
+ORDER BY "year_rank","artist"
+--Write a query that shows all rows for which T-Pain was a group member, ordered by rank on the charts, from lowest to highest rank (from 100 to 1).
+select *
+FROM tutorial.billboard_top_100_year_end
+where group_name ilike '%t-pain%'
+ORDER BY "year_rank" DESC
+--Write a query that returns songs that ranked between 10 and 20 (inclusive) in 1993, 2003, or 2013. Order the results by year and rank, and leave a comment on each line of the WHERE clause to indicate what that line does
+select *
+FROM tutorial.billboard_top_100_year_end
+where "year" in (1993,2003, 2013)
+and "year_rank" BETWEEN 10 and 20 
+SQL COUNT
+--Write a query to count the number of non-null rows in the low column.
+SELECT count(low)
+ FROM tutorial.aapl_historical_stock_price
+--Write a query that determines counts of every single column. With these counts, can you tell which column has the most null values?
+SELECT 
+ COUNT(year) AS Year,
+ COUNT(month) AS Month,
+ COUNT(open) AS Open,
+ COUNT(high) AS High,
+ COUNT(low) AS Low,
+ COUNT(close) AS Close,
+ COUNT(volume) AS Volume
+ FROM tutorial.aapl_historical_stock_price
+SQL SUM
+--write a query to calculate the average opening price (hint: you will need to use both COUNT and SUM, as well as some simple arithmetic.).
+SELECT sum(open)/count(open) AS Average
+ FROM tutorial.aapl_historical_stock_price
+SQL MIN AND MAX
+--What was Apple's lowest stock price (at the time of this data collection)?
+SELECT min(low) AS "Lowest price"
+ FROM tutorial.aapl_historical_stock_price
+--What was the highest single-day increase in Apple's share value?
+SELECT max(close - open) AS "Highest price in a single day"
+ FROM tutorial.aapl_historical_stock_price
+SQL AVG
+--Write a query that calculates the average daily trade volume for Apple stock.
+SELECT AVG (volume)
+  FROM tutorial.aapl_historical_stock_price
+SQL GROUP BY
+--Calculate the total number of shares traded each month. Order your results chronologically.
+SELECT year,
+month,
+sum(volume) as volume_sum
+FROM tutorial.aapl_historical_stock_price
+GROUP by year,month
+ORDER by year,month
